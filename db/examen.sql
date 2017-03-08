@@ -6,6 +6,9 @@ create table usuarios (
   password   char(32)    not null
 );
 
+insert into usuarios (nombre, password)
+    values ('pepe', md5('pepe'));
+
 drop table if exists aeropuertos cascade;
 
 create table aeropuertos (
@@ -14,12 +17,18 @@ create table aeropuertos (
   den_aero varchar(40) not null
 );
 
+insert into aeropuertos (id_aero, den_aero)
+    values ('XRY', 'Jerez'), ('SVQ', 'Sevilla');
+
 drop table if exists companias cascade;
 
 create table companias (
   id       bigserial   constraint pk_companias primary key,
   den_comp varchar(30) not null
 );
+
+insert into companias (den_comp)
+    values ('Spanair');
 
 drop table if exists vuelos cascade;
 
@@ -41,6 +50,10 @@ create table vuelos (
   precio   numeric(6,2) not null
 );
 
+insert into vuelos (id_vuelo, orig_id, dest_id, comp_id, salida, llegada, plazas, precio)
+    values ('SP2223', 1, 2, 1, current_timestamp + '1 day'::interval,
+            current_timestamp + '2 day'::interval, 200, 12.50);
+
 drop table if exists reservas cascade;
 
 create table reservas (
@@ -56,3 +69,5 @@ create table reservas (
   constraint uq_asiento_unico unique (vuelo_id, asiento)
 );
 
+insert into reservas (usuario_id, vuelo_id, asiento, fecha_hora)
+    values (1, 1, 5, current_timestamp);
