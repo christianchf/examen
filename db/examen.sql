@@ -65,7 +65,7 @@ create table reservas (
                         references vuelos (id)
                         on delete no action on update cascade,
   asiento    numeric(3) not null,
-  fecha_hora timestamp  not null,
+  fecha_hora timestamp  not null default current_timestamp,
   constraint uq_asiento_unico unique (vuelo_id, asiento)
 );
 

@@ -32,11 +32,11 @@ class Reserva extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario_id', 'vuelo_id', 'asiento', 'fecha_hora'], 'required'],
+            [['usuario_id', 'vuelo_id', 'asiento'], 'required'],
             [['usuario_id', 'vuelo_id'], 'integer'],
             [['asiento'], 'number'],
             [['fecha_hora'], 'safe'],
-            [['vuelo_id', 'asiento'], 'unique', 'targetAttribute' => ['vuelo_id', 'asiento'], 'message' => 'The combination of Vuelo ID and Asiento has already been taken.'],
+            [['vuelo_id', 'asiento'], 'unique', 'targetAttribute' => ['vuelo_id', 'asiento'], 'message' => 'Ese asiento ya esta ocupado.'],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_id' => 'id']],
             [['vuelo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vuelo::className(), 'targetAttribute' => ['vuelo_id' => 'id']],
         ];
