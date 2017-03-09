@@ -18,7 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'vuelo.id_vuelo',
+            [
+                'label' => 'Id Vuelo',
+                'value' => function ($model, $key, $index, $column) {
+                    return Html::a(
+                        $model->vuelo->id_vuelo,
+                        ['reservas/crear', 'vuelo_id' => $model->vuelo->id]
+                    );
+                },
+                'format' => 'html',
+            ],
             'asiento',
             'fecha_hora:datetime',
         ],

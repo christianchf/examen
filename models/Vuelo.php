@@ -25,7 +25,7 @@ use Yii;
 class Vuelo extends \yii\db\ActiveRecord
 {
     public $disponibles;
-    
+
     /**
      * @inheritdoc
      */
@@ -109,5 +109,24 @@ class Vuelo extends \yii\db\ActiveRecord
     public function getCompania()
     {
         return $this->hasOne(Compania::className(), ['id' => 'comp_id'])->inverseOf('vuelos');
+    }
+
+    public function getPlazasOcupadas()
+    {
+        // return array_column($this->getReservas()->asArray()->all(), 'asiento');
+        return $this->getReservas()->select('asiento')->column();
+    }
+
+    public function getPlazasLibres()
+    {
+        // $ocupadas = $this->plazasOcupadas;
+        // $libres = [];
+        // for ($i = 1; $i < $this->plazas; $i++) {
+        //     if (!in_array($i, $ocupadas)) {
+        //         $libres[] = $i;
+        //     }
+        // }
+        // return $libres;
+        return array_values(array_diff(range(1, $this->plazas), $this->plazasOcupadas));
     }
 }

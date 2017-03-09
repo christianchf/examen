@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'asiento')->textInput() ?>
+        <?= $form->field($model, 'asiento')->dropDownList($asientos) ?>
 
         <div class="form-group">
             <?= Html::submitButton('Reservar', ['class' => 'btn btn-success']) ?>

@@ -39,6 +39,13 @@ class Reserva extends \yii\db\ActiveRecord
             [['vuelo_id', 'asiento'], 'unique', 'targetAttribute' => ['vuelo_id', 'asiento'], 'message' => 'Ese asiento ya esta ocupado.'],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usuario_id' => 'id']],
             [['vuelo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vuelo::className(), 'targetAttribute' => ['vuelo_id' => 'id']],
+            [['asiento'], function ($attribute, $params, $validator) {
+                $asiento = $this->asiento;
+                $plazas = $this->vuelo->plazas;
+                if ($asiento < 0 || $asiento > $plazas) {
+                    $this->addError($attribute, "El asiento $asiento debe estar comprendido entre 1 y $plazas");
+                }
+            }],
         ];
     }
 
